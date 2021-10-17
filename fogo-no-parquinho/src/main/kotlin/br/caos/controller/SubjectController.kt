@@ -3,7 +3,6 @@ package br.caos.controller
 import br.caos.dao.SubjectDAO
 import br.caos.models.Subject
 import br.caos.view.SubjectDto
-import java.security.MessageDigest
 import java.util.*
 
 class SubjectController {

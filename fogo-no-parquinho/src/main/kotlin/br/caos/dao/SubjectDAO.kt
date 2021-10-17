@@ -1,7 +1,6 @@
 package br.caos.dao
 
 import br.caos.models.Subject
-import br.caos.models.User
 
 class SubjectDAO : GenericDAO {
     override fun insert(element: Any): Boolean {
@@ -11,7 +10,7 @@ class SubjectDAO : GenericDAO {
             connection = ConnectionDAO()
             val subject = element as Subject
             val preparedStatement = connection.getPreparedStatement("""
-                INSERT INTO subject
+                INSERT INTO Subject
                 (code, name, description, creationTime)
                 VALUES (?,?,?,NOW());
             """.trimIndent())
@@ -33,7 +32,7 @@ class SubjectDAO : GenericDAO {
         var connection : ConnectionDAO? = null
         try {
             connection = ConnectionDAO()
-            val resultSet = connection?.executeQuery("SELECT * FROM produtos WHERE id == $id")
+            val resultSet = connection?.executeQuery("SELECT * FROM Subject WHERE id == $id")
             while (resultSet?.next()!!)
                 subject = Subject(
                     resultSet.getInt("id"),
@@ -79,7 +78,7 @@ class SubjectDAO : GenericDAO {
         try {
             connection = ConnectionDAO()
             subject = element as Subject
-            val preparedStatement = connection.getPreparedStatement("""UPDATE User 
+            val preparedStatement = connection.getPreparedStatement("""UPDATE Subject 
                 SET code=?, name=?, description=?
                 WHERE id=?
             """.trimMargin())

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/fogo-no-parquinho/.idea/fogo-no-parquinho-backend.iml" filepath="$PROJECT_DIR$/fogo-no-parquinho/.idea/fogo-no-parquinho-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fogo-no-parquinho/.idea/.idea/fogo-no-parquinho-backend.iml" filepath="$PROJECT_DIR$/fogo-no-parquinho/.idea/.idea/fogo-no-parquinho-backend.iml" />
     </modules>
   </component>
 </project>

@@ -35,7 +35,7 @@ class UserDAO : GenericDAO {
         var connection : ConnectionDAO? = null
         try {
             connection = ConnectionDAO()
-            val resultSet = connection?.executeQuery("SELECT * FROM produtos WHERE id == $id")
+            val resultSet = connection?.executeQuery("SELECT * FROM User WHERE id == $id")
             while (resultSet?.next()!!)
                 user = User(
                     resultSet.getInt("id"),
@@ -44,8 +44,7 @@ class UserDAO : GenericDAO {
                     resultSet.getString("code"),
                     resultSet.getString("fullName"),
                     resultSet.getInt("roleId"),
-                    resultSet.getDate("creationTime")
-                )
+                    resultSet.getDate("creationTime"))
         } catch (ex : Exception){
             ex.printStackTrace()
         } finally {
@@ -125,4 +124,30 @@ class UserDAO : GenericDAO {
         }
     }
 
+    /** Método que procura por uma entidade Usuário dado seu Username
+     * @param username Nome do Usuário que será procurado
+     * @return Usuário encontrado
+     * */
+    fun findUser(username:String) : User? {
+        var user : User? = null
+        var connection : ConnectionDAO? = null
+        try {
+            connection = ConnectionDAO()
+            val resultSet = connection?.executeQuery("SELECT * FROM User WHERE username like \"$username\"")
+            while (resultSet?.next()!!)
+                user = User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("code"),
+                    resultSet.getString("fullName"),
+                    resultSet.getInt("roleId"),
+                    resultSet.getDate("creationTime"))
+        } catch (ex:Exception) {
+            ex.printStackTrace()
+        } finally {
+            connection?.close()
+            return user
+        }
+    }
 }

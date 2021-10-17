@@ -6,5 +6,5 @@ class Review (
     val id: Int,
     val score: Int,
     val feedback: String,
-    val revierId: Int
+    val reviewId: Int
 )

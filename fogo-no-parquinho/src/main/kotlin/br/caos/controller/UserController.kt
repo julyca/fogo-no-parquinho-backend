@@ -52,4 +52,23 @@ class UserController {
         }
         return result
     }
+
+    fun listAllUsers():List<UserDto>{
+        val list = _userDAO.getAll() as List<User>
+        var result = mutableListOf<UserDto>()
+        for (user in list){
+            result.add(user.toDto())
+        }
+        return result
+    }
+
+    fun User.toDto():UserDto = UserDto(
+        id,
+        username,
+        password,
+        code,
+        fullName,
+        roleId
+    )
+
 }

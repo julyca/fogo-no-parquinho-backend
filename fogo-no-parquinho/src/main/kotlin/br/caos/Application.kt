@@ -16,6 +16,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
 import java.util.*
@@ -75,7 +76,6 @@ fun main() {
                         call.respondText("Usuário criado com sucesso!")
                     else
                         call.respond(HttpStatusCode.InternalServerError, "Ocorreu um erro ao tentar cadastrar o usuário")
-
                 } catch (ex: Exception) {
                     ex.printStackTrace()
                     call.respond(HttpStatusCode.BadRequest,"O formato dos dados enviados está incorreto.")
@@ -85,6 +85,13 @@ fun main() {
 
             authenticate ("auth-jwt") {
                 route("/users") {
+                    get {
+                        val userList = Json.encodeToString(userControl.listAllUsers())
+                        call.respond(userList)
+                    }
+                    get("/roles") {
+
+                    }
                     route("/{userCode}") {
                         get {
 
@@ -95,9 +102,6 @@ fun main() {
                         post("/review") {
 
                         }
-                    }
-                    get("/roles") {
-
                     }
                 }
 

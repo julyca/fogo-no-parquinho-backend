@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserDto (
+    val id: Int=0,
     val username: String,
     val password: String,
     val code: String,

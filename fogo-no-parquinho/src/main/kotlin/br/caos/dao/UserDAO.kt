@@ -196,4 +196,28 @@ class UserDAO : GenericDAO {
             return roles
         }
     }
+
+    fun relateSubject(subId : Int, userId: Int) : Boolean {
+        var result: Boolean = true
+        var connection : ConnectionDAO? = null
+        try {
+            connection = ConnectionDAO()
+            val preparedStatement = connection.getPreparedStatement("""
+                INSERT INTO UserSubjects
+                (userId, subjectId)
+                VALUES (?,?);
+            """.trimIndent())
+            preparedStatement?.setInt(2,subId)
+            preparedStatement?.setInt(1,userId)
+
+            preparedStatement?.executeUpdate()
+            connection.commit()
+        } catch (ex : Exception){
+            result = false
+            ex.printStackTrace()
+        } finally {
+            connection?.close()
+            return result
+        }
+    }
 }

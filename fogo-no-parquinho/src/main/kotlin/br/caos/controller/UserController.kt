@@ -85,6 +85,10 @@ class UserController {
         return _userDAO.getByCode(code)?.toDto()
     }
 
+    fun relateSubject(subjectId:Int, userId:Int):Boolean {
+        return _userDAO.relateSubject(subjectId,userId)
+    }
+
 
 
 

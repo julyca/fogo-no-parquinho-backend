@@ -1,6 +1,7 @@
 package br.caos.dao
 
 import br.caos.models.Subject
+import br.caos.models.User
 
 class SubjectDAO : GenericDAO {
     override fun insert(element: Any): Boolean {
@@ -115,4 +116,25 @@ class SubjectDAO : GenericDAO {
         }
     }
 
+    fun getByCode(code:String) : Subject? {
+        var subject : Subject? = null
+        var connection : ConnectionDAO? = null
+        try {
+            connection = ConnectionDAO()
+            val resultSet = connection?.executeQuery("SELECT * FROM Subject WHERE code like \"$code\"")
+            while (resultSet?.next()!!)
+                subject = Subject(
+                    resultSet.getInt("id"),
+                    resultSet.getString("code"),
+                    resultSet.getString("name"),
+                    resultSet.getString("description"),
+                    resultSet.getDate("creationTime")
+                )
+        } catch (ex:Exception) {
+            ex.printStackTrace()
+        } finally {
+            connection?.close()
+            return subject
+        }
+    }
 }

@@ -6,10 +6,7 @@ import br.caos.controller.UserController
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import br.caos.shared.SharedPaths
-import br.caos.view.LoginDto
-import br.caos.view.ReviewSubjectDto
-import br.caos.view.ReviewUserDto
-import br.caos.view.UserDto
+import br.caos.view.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.application.*
@@ -106,13 +103,12 @@ fun main() {
                             call.respond(userInfo)
                         }
                         post("/subject") {
-                            var reviewDto = Json.decodeFromString<ReviewSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
+                            var relateDto = Json.decodeFromString<RelateSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
                             // recuperando dados do usuário da sessão
                             val principal = call.principal<JWTPrincipal>()
                             val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
-                            reviewDto.review.reviewerId = currentUser!!.id
 
-                            reviewControl.reviewSubject(reviewDto.subjectId, reviewDto.review)
+                            userControl.relateSubject(relateDto.subjectId, currentUser!!.id)
                         }
                         post("/review") {
                             var reviewDto = Json.decodeFromString<ReviewUserDto>(call.receiveText()) // Adquirindo dados da requisição
@@ -128,17 +124,35 @@ fun main() {
 
                 route("/subjects") {
                     get {
-
+                        val subList = Json.encodeToString(subjectControl.listAllSubjects())
+                        call.respond(subList)
                     }
                     post {
-
+                        try {
+                            val subDto = Json.decodeFromString<SubjectDto>(call.receiveText()) // Adquirindo dados da requisição
+                            val wasCreated = subjectControl.registerSubject(subDto)
+                            if (wasCreated) // Se usuário foi cadastrado com sucesso
+                                call.respondText("Disciplina criada com sucesso!")
+                            else
+                                call.respond(HttpStatusCode.InternalServerError, "Ocorreu um erro ao tentar criar a Disciplina")
+                        } catch (ex: Exception) {
+                            ex.printStackTrace()
+                            call.respond(HttpStatusCode.BadRequest,"O formato dos dados enviados está incorreto.")
+                        }
                     }
                     route("/{subjectCode}") {
                         get {
-
+                            val subInfo = Json.encodeToString(subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString()))
+                            call.respond(subInfo)
                         }
                         post("/review") {
+                            var reviewDto = Json.decodeFromString<ReviewSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
+                            // recuperando dados do usuário da sessão
+                            val principal = call.principal<JWTPrincipal>()
+                            val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
+                            reviewDto.review.reviewerId = currentUser!!.id
 
+                            reviewControl.reviewSubject(reviewDto.subjectId, reviewDto.review)
                         }
                     }
                 }

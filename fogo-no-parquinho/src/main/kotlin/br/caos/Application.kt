@@ -1,10 +1,14 @@
 package br.caos
 
+import br.caos.controller.ReviewController
+import br.caos.controller.SubjectController
 import br.caos.controller.UserController
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import br.caos.shared.SharedPaths
 import br.caos.view.LoginDto
+import br.caos.view.ReviewSubjectDto
+import br.caos.view.ReviewUserDto
 import br.caos.view.UserDto
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
@@ -23,6 +27,9 @@ import java.util.*
 
 fun main() {
     val userControl : UserController = UserController()
+    val reviewControl = ReviewController()
+    val subjectControl = SubjectController()
+
     embeddedServer(Netty, port = 4040, host = "0.0.0.0") {
         install(Authentication){
             jwt("auth-jwt"){
@@ -99,10 +106,22 @@ fun main() {
                             call.respond(userInfo)
                         }
                         post("/subject") {
+                            var reviewDto = Json.decodeFromString<ReviewSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
+                            // recuperando dados do usuário da sessão
+                            val principal = call.principal<JWTPrincipal>()
+                            val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
+                            reviewDto.review.reviewerId = currentUser!!.id
 
+                            reviewControl.reviewSubject(reviewDto.subjectId, reviewDto.review)
                         }
                         post("/review") {
+                            var reviewDto = Json.decodeFromString<ReviewUserDto>(call.receiveText()) // Adquirindo dados da requisição
+                            // recuperando dados do usuário da sessão
+                            val principal = call.principal<JWTPrincipal>()
+                            val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
+                            reviewDto.review.reviewerId = currentUser!!.id
 
+                            reviewControl.reviewSubject(reviewDto.userId, reviewDto.review)
                         }
                     }
                 }

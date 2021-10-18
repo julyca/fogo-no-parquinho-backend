@@ -55,6 +55,15 @@ class UserController {
         return result
     }
 
+    fun getUserByName(username:String):User?{
+        try {
+            return _userDAO.getByUsername(username)
+        }catch (ex: Exception){
+            ex.printStackTrace()
+        }
+        return null
+    }
+
     fun listAllUsers():List<UserDto>{
         val list = _userDAO.getAll() as List<User>
         var result = mutableListOf<UserDto>()

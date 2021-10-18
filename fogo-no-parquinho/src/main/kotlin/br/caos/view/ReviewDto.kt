@@ -7,5 +7,5 @@ data class ReviewDto (
     val id: Int,
     val score: Int,
     val feedback: String,
-    val revierId: Int
+    var reviewerId: Int
 )

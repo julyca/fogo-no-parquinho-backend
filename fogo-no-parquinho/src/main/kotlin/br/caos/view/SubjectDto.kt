@@ -1,6 +1,7 @@
 package br.caos.view
 
 import kotlinx.serialization.Serializable
+import java.util.*
 
 @Serializable
 data class SubjectDto (

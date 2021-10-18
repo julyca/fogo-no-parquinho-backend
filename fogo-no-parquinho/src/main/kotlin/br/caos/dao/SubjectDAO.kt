@@ -102,7 +102,7 @@ class SubjectDAO : GenericDAO {
         var result : Boolean = true
         try {
             connection = ConnectionDAO()
-            val preparedStatement = connection.getPreparedStatement("DELETE FROM Subject WHERE id =?")
+            val preparedStatement = connection.getPreparedStatement("DELETE FROM Subject WHERE id ==?")
             preparedStatement?.setInt(1,id)
             preparedStatement?.executeUpdate()
             connection.commit()

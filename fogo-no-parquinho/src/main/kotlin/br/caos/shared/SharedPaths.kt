@@ -9,5 +9,7 @@ class SharedPaths {
         val JWT_SECRET = "let_them_burn"
         val JWT_AUD = "fogo_no_parquinho.com/login"
         val JWT_ISS = "fogo_no_parquinho.com/"
+
+
     }
 }

@@ -2,7 +2,9 @@ package br.caos.controller
 
 import br.caos.dao.UserDAO
 import br.caos.models.User
+import br.caos.models.UserRoles
 import br.caos.view.LoginDto
+import br.caos.view.RoleDto
 import br.caos.view.UserDto
 import java.util.*
 
@@ -62,13 +64,15 @@ class UserController {
         return result
     }
 
-    fun User.toDto():UserDto = UserDto(
-        id,
-        username,
-        password,
-        code,
-        fullName,
-        roleId
-    )
+    fun listAllRoles():List<RoleDto>{
+        val list = _userDAO.getRoles() as List<UserRoles>
+        var result = mutableListOf<RoleDto>()
+        for (user in list){
+            result.add(user.toDto())
+        }
+        return result
+    }
+
+
 
 }

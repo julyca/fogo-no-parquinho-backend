@@ -1,6 +1,7 @@
 package br.caos.dao
 
 import br.caos.models.User
+import br.caos.models.UserRoles
 
 class UserDAO : GenericDAO {
     override fun insert(element: Any): Boolean {
@@ -148,6 +149,24 @@ class UserDAO : GenericDAO {
         } finally {
             connection?.close()
             return user
+        }
+    }
+
+    fun getRoles(): List<UserRoles>{
+        val roles = mutableListOf<UserRoles>()
+        var connection : ConnectionDAO? = null
+        try {
+            connection = ConnectionDAO()
+            val resultSet = connection.executeQuery("SELECT * FROM UserRoles;")
+            while (resultSet?.next()!!){
+                roles.add(UserRoles(resultSet.getInt("id"), resultSet.getString("roleName")))
+            }
+        } catch (ex : Exception){
+            ex.printStackTrace()
+        }
+        finally {
+            connection?.close()
+            return roles
         }
     }
 }

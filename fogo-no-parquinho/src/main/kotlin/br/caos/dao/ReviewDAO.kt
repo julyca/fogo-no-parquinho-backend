@@ -2,7 +2,7 @@ package br.caos.dao
 
 import br.caos.models.Review
 
-class ReviewDAO {
+class ReviewDAO : GenericDAO {
     override fun insert(element: Any): Boolean {
         var result: Boolean = true
         var connection : ConnectionDAO? = null
@@ -37,7 +37,7 @@ class ReviewDAO {
                     resultSet.getInt("id"),
                     resultSet.getInt("score"),
                     resultSet.getString("feedback"),
-                    resultSet.getInt("reviewId"),
+                    resultSet.getInt("reviewId"))
         } catch (ex : Exception){
             ex.printStackTrace()
         } finally {

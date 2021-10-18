@@ -95,7 +95,8 @@ fun main() {
                     }
                     route("/{userCode}") {
                         get {
-
+                            val userInfo = Json.encodeToString(userControl.getUserInfo(call.parameters["userCode"].toString()))
+                            call.respond(userInfo)
                         }
                         post("/subject") {
 

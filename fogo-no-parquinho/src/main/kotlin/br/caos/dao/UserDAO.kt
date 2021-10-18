@@ -129,12 +129,39 @@ class UserDAO : GenericDAO {
      * @param username Nome do Usuário que será procurado
      * @return Usuário encontrado
      * */
-    fun findUser(username:String) : User? {
+    fun getByUsername(username:String) : User? {
         var user : User? = null
         var connection : ConnectionDAO? = null
         try {
             connection = ConnectionDAO()
             val resultSet = connection?.executeQuery("SELECT * FROM User WHERE username like \"$username\"")
+            while (resultSet?.next()!!)
+                user = User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("code"),
+                    resultSet.getString("fullName"),
+                    resultSet.getInt("roleId"),
+                    resultSet.getDate("creationTime"))
+        } catch (ex:Exception) {
+            ex.printStackTrace()
+        } finally {
+            connection?.close()
+            return user
+        }
+    }
+
+    /** Método que procura por uma entidade Usuário dado seu Código (Code)
+     * @param code Código do Usuário que será procurado
+     * @return Usuário encontrado
+     * */
+    fun getByCode(code:String) : User? {
+        var user : User? = null
+        var connection : ConnectionDAO? = null
+        try {
+            connection = ConnectionDAO()
+            val resultSet = connection?.executeQuery("SELECT * FROM User WHERE code like \"$code\"")
             while (resultSet?.next()!!)
                 user = User(
                     resultSet.getInt("id"),

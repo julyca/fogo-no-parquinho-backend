@@ -33,7 +33,7 @@ class UserController {
      * */
     fun login(dto: LoginDto) : Boolean{
         var result = false
-        val user = _userDAO.findUser(dto.username)
+        val user = _userDAO.getByUsername(dto.username)
         if(user != null)
             result = user.password.equals(dto.password)
         return result
@@ -46,7 +46,7 @@ class UserController {
     fun userExists(username:String):Boolean{
         var result = false
         try {
-            val user = _userDAO.findUser(username)
+            val user = _userDAO.getByUsername(username)
             if(user != null)
                 result = true
         }catch (ex: Exception){
@@ -72,6 +72,10 @@ class UserController {
         }
         return result
     }
+    fun getUserInfo(code : String) : UserDto?{
+        return _userDAO.getByCode(code)?.toDto()
+    }
+
 
 
 

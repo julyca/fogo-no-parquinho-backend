@@ -1,5 +1,6 @@
 package br.caos.models
 
+import br.caos.view.UserDto
 import java.util.*
 
 data class User (
@@ -10,4 +11,14 @@ data class User (
     val fullName: String,
     val roleId: Int,
     val creationTime: Date
-)
+) {
+    fun toDto(): UserDto  = UserDto(
+        id,
+        username,
+        password,
+        code,
+        fullName,
+        roleId
+    )
+}
+

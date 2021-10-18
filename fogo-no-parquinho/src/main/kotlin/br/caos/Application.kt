@@ -90,7 +90,8 @@ fun main() {
                         call.respond(userList)
                     }
                     get("/roles") {
-
+                        val listRoles = Json.encodeToString(userControl.listAllRoles())
+                        call.respond(listRoles)
                     }
                     route("/{userCode}") {
                         get {

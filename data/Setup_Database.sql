@@ -94,10 +94,10 @@ INSERT INTO Subject (code,name,description,creationTime) VALUES
 SELECT * FROM Subject;
 
 INSERT INTO Review (feedback,score,creationTime,reviewerId) VALUES
-('odei omuito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa?',1,NOW(),SELECT id FROM `User` WHERE username LIKE 'chorao'),
+('odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa?',1,NOW(),SELECT id FROM `User` WHERE username LIKE 'chorao'),
 ('Começou ruim, mas hoje é uma das melhores aulas',8,NOW(),SELECT id FROM `User` WHERE username LIKE 'rangeru'),
 ('Capacitor goes Boom',7,NOW(),SELECT id FROM `User` WHERE username LIKE 'kalc'),
-('MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA',5,NOW(),SELECT id FROM `User` WHERE username LIKE 'DIO');
+('MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA',1,NOW(),SELECT id FROM `User` WHERE username LIKE 'DIO'),
 SELECT * FROM Review;
 
 INSERT INTO UserSubjects (userId,subjectId) VALUES (1,1); 

@@ -107,8 +107,8 @@ SELECT * FROM Review;
 INSERT INTO UserSubjects (userId,subjectId) VALUES (1,1); 
 SELECT * FROM UserSubjects;
 
-INSERT INTO UserReviews (reviewId,reviewedSubjectId) VALUES ();
+INSERT INTO UserReviews (reviewId,reviewedSubjectId) VALUES (1,1);
 SELECT * FROM UserReviews;
 
-INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES ();
+INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES (1,1);
 SELECT * FROM UserReviews;

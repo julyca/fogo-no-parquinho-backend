@@ -104,11 +104,26 @@ INSERT INTO Review (feedback,score,creationTime,reviewerId) VALUES
 ('Cocaine is a hell of a drug',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc'));
 SELECT * FROM Review;
 
-INSERT INTO UserSubjects (userId,subjectId) VALUES (1,1); 
+INSERT INTO UserSubjects (userId,subjectId) VALUES
+((SELECT id FROM `User` WHERE username LIKE 'jorjao'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM304')),
+((SELECT id FROM `User` WHERE username LIKE 'furlando'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM253')),
+((SELECT id FROM `User` WHERE username LIKE 'furlando'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM225')),
+((SELECT id FROM `User` WHERE username LIKE 'lentidao'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM306')),
+((SELECT id FROM `User` WHERE username LIKE 'dono'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM251'));
 SELECT * FROM UserSubjects;
 
-INSERT INTO UserReviews (reviewId,reviewedSubjectId) VALUES (1,1);
+INSERT INTO UserReviews (reviewId,reviewedUserId) VALUES
+((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
+((SELECT id FROM `User` WHERE username LIKE 'dono'),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
+((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+((SELECT id FROM `User` WHERE username LIKE 'chorao'),(SELECT id FROM `User` WHERE username LIKE 'furlando')),
+((SELECT id FROM `User` WHERE username LIKE 'chorao'),(SELECT id FROM `User` WHERE username LIKE 'jorjao'));
 SELECT * FROM UserReviews;
 
-INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES (1,1);
+INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES
+((SELECT id FROM `User` WHERE username LIKE 'chorao'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM251')),
+((SELECT id FROM `User` WHERE username LIKE 'rangeru'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM253')),
+((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM304')),
+((SELECT id FROM `User` WHERE username LIKE 'DIO'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM303')),
+((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM306'));
 SELECT * FROM UserReviews;

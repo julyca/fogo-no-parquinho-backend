@@ -8,5 +8,6 @@ data class SubjectDto (
     val id: Int,
     val code: String,
     val name: String,
-    val description: String
+    val description: String,
+    val creationTime: String
 )

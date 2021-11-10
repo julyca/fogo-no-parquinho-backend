@@ -31,7 +31,7 @@ class SubjectController {
         return result
     }
 
-    fun getSubjectInfo(code : String) : UserDto?{
+    fun getSubjectInfo(code : String) : SubjectDto?{
         return _subjectDAO.getByCode(code)?.toDto()
     }
 }

@@ -15,6 +15,6 @@ class Subject (
         code,
         name,
         description,
-        creationTime
+        creationTime.toString()
     )
 }

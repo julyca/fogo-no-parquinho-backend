@@ -87,21 +87,39 @@ fun main() {
 
             }
 
+            route("/users") {
+                get {
+                    val userList = Json.encodeToString(userControl.listAllUsers())
+                    call.respond(userList)
+                }
+                get("/roles") {
+                    val listRoles = Json.encodeToString(userControl.listAllRoles())
+                    call.respond(listRoles)
+                }
+                route("/{userCode}") {
+                    get {
+                        val userInfo = Json.encodeToString(userControl.getUserInfo(call.parameters["userCode"].toString()))
+                        call.respond(userInfo)
+                    }
+                }
+            }
+
+            route("/subjects") {
+                get {
+                    val subList = Json.encodeToString(subjectControl.listAllSubjects())
+                    call.respond(subList)
+                }
+                route("/{subjectCode}") {
+                    get {
+                        val subInfo = Json.encodeToString(subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString()))
+                        call.respond(subInfo)
+                    }
+                }
+            }
+
             authenticate ("auth-jwt") {
                 route("/users") {
-                    get {
-                        val userList = Json.encodeToString(userControl.listAllUsers())
-                        call.respond(userList)
-                    }
-                    get("/roles") {
-                        val listRoles = Json.encodeToString(userControl.listAllRoles())
-                        call.respond(listRoles)
-                    }
                     route("/{userCode}") {
-                        get {
-                            val userInfo = Json.encodeToString(userControl.getUserInfo(call.parameters["userCode"].toString()))
-                            call.respond(userInfo)
-                        }
                         post("/subject") {
                             var relateDto = Json.decodeFromString<RelateSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
                             // recuperando dados do usuário da sessão
@@ -123,10 +141,6 @@ fun main() {
                 }
 
                 route("/subjects") {
-                    get {
-                        val subList = Json.encodeToString(subjectControl.listAllSubjects())
-                        call.respond(subList)
-                    }
                     post {
                         try {
                             val subDto = Json.decodeFromString<SubjectDto>(call.receiveText()) // Adquirindo dados da requisição
@@ -141,10 +155,6 @@ fun main() {
                         }
                     }
                     route("/{subjectCode}") {
-                        get {
-                            val subInfo = Json.encodeToString(subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString()))
-                            call.respond(subInfo)
-                        }
                         post("/review") {
                             var reviewDto = Json.decodeFromString<ReviewSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
                             // recuperando dados do usuário da sessão

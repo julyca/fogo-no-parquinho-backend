@@ -95,9 +95,11 @@ SELECT * FROM Subject;
 
 INSERT INTO Review (feedback,score,creationTime,reviewerId) VALUES
 ('odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa?',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
+('odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa??',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
+('odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa???',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
 ('Começou ruim, mas hoje é uma das melhores aulas',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
 ('Capacitor goes Boom',7,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
-('MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'DIO'))
+('MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'DIO')),
 ('Esse maluco chora de tudo, pela mor',3,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
 ('Nunca ví esse maluco',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
 ('I SLEEP',3,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
@@ -105,25 +107,25 @@ INSERT INTO Review (feedback,score,creationTime,reviewerId) VALUES
 SELECT * FROM Review;
 
 INSERT INTO UserSubjects (userId,subjectId) VALUES
-((SELECT id FROM `User` WHERE username LIKE 'jorjao'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM304')),
-((SELECT id FROM `User` WHERE username LIKE 'furlando'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM253')),
-((SELECT id FROM `User` WHERE username LIKE 'furlando'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM225')),
-((SELECT id FROM `User` WHERE username LIKE 'lentidao'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM306')),
-((SELECT id FROM `User` WHERE username LIKE 'dono'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM251'));
+((SELECT id FROM `User` WHERE username LIKE 'jorjao'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM304')),
+((SELECT id FROM `User` WHERE username LIKE 'furlano'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
+((SELECT id FROM `User` WHERE username LIKE 'furlano'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM225')),
+((SELECT id FROM `User` WHERE username LIKE 'furlano'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM306')),
+((SELECT id FROM `User` WHERE username LIKE 'dono'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM251'));
 SELECT * FROM UserSubjects;
 
 INSERT INTO UserReviews (reviewId,reviewedUserId) VALUES
-((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
-((SELECT id FROM `User` WHERE username LIKE 'dono'),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
-((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM `User` WHERE username LIKE 'dono')),
-((SELECT id FROM `User` WHERE username LIKE 'chorao'),(SELECT id FROM `User` WHERE username LIKE 'furlando')),
-((SELECT id FROM `User` WHERE username LIKE 'chorao'),(SELECT id FROM `User` WHERE username LIKE 'jorjao'));
+((SELECT id FROM `Review` WHERE feedback LIKE 'Esse maluco chora de tudo, pela mor'),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Nunca ví esse maluco'),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Cocaine is a hell of a drug'),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa???'),(SELECT id FROM `User` WHERE username LIKE 'furlano')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa??'),(SELECT id FROM `User` WHERE username LIKE 'jorjao'));
 SELECT * FROM UserReviews;
 
 INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES
-((SELECT id FROM `User` WHERE username LIKE 'chorao'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM251')),
-((SELECT id FROM `User` WHERE username LIKE 'rangeru'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM253')),
-((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM304')),
-((SELECT id FROM `User` WHERE username LIKE 'DIO'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM303')),
-((SELECT id FROM `User` WHERE username LIKE 'kalc'),(SELECT id FROM 'Subject' WHERE code LIKE 'ECM306'));
-SELECT * FROM UserReviews;
+((SELECT id FROM `Review` WHERE feedback LIKE 'odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa?'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM251')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Começou ruim, mas hoje é uma das melhores aulas'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Capacitor goes Boom'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM304')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'I SLEEP'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM306'));
+SELECT * FROM SubjectReviews;

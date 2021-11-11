@@ -12,6 +12,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
+import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -28,6 +29,10 @@ fun main() {
     val subjectControl = SubjectController()
 
     embeddedServer(Netty, port = 4040, host = "0.0.0.0") {
+        install(CORS){
+            anyHost()
+            method(HttpMethod.Options)
+        }
         install(Authentication){
             jwt("auth-jwt"){
                verifier(JWT.require(Algorithm.HMAC256(SharedPaths.JWT_SECRET))
@@ -89,6 +94,7 @@ fun main() {
 
             route("/users") {
                 get {
+
                     val userList = Json.encodeToString(userControl.listAllUsers())
                     call.respond(userList)
                 }

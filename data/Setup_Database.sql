@@ -103,7 +103,16 @@ INSERT INTO Review (feedback,score,creationTime,reviewerId) VALUES
 ('Esse maluco chora de tudo, pela mor',3,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
 ('Nunca ví esse maluco',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
 ('I SLEEP',3,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
-('Cocaine is a hell of a drug',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc'));
+('Cocaine is a hell of a drug',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
+('Nunca conheci um maluco loro tão foda',9,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+('Porque esse chorão quer tanto aula presencial se ele só dorme na aula?',3,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+('Eu não sei o que esse professor usa para ficar tão animado as 7:40 da manhã, mas eu quero!',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Jorjão é um deus vivo, que homão',10,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+('Definitivamente umas das revelações do ano, professor Furlano se superou para se adaptar ao novo ambiente online',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+('Definitivamente umas das revelações do ano, professor Furlano se superou para se adaptar ao novo ambiente online',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+('Eu legitimamente não tenho ideia do que está acontecendo...',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
+('Eu legitimamente não tenho ideia do que está acontecendo...',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Eu sou a unica pessoa que está do lado desse professor!',9,NOW(),(SELECT id FROM `User` WHERE username LIKE 'chorao'));
 SELECT * FROM Review;
 
 INSERT INTO UserSubjects (userId,subjectId) VALUES
@@ -119,7 +128,11 @@ INSERT INTO UserReviews (reviewId,reviewedUserId) VALUES
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Nunca ví esse maluco'),(SELECT id FROM `User` WHERE username LIKE 'kalc')),
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Cocaine is a hell of a drug'),(SELECT id FROM `User` WHERE username LIKE 'dono')),
 ((SELECT id FROM `Review` WHERE feedback LIKE 'odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa???'),(SELECT id FROM `User` WHERE username LIKE 'furlano')),
-((SELECT id FROM `Review` WHERE feedback LIKE 'odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa??'),(SELECT id FROM `User` WHERE username LIKE 'jorjao'));
+((SELECT id FROM `Review` WHERE feedback LIKE 'odeio muito tudo isso, como esse professor quer que eu estude? Quem ele pensa que ele é? Tem como dar nota negativa nesse coisa??'),(SELECT id FROM `User` WHERE username LIKE 'jorjao')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Nunca conheci um maluco loro tão foda'),(SELECT id FROM `User` WHERE username LIKE 'DIO'))
+((SELECT id FROM `Review` WHERE feedback LIKE 'Porque esse chorão quer tanto aula presencial se ele só dorme na aula?'),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Eu não sei o que esse professor usa para ficar tão animado as 7:40 da manhã, mas eu quero!'),(SELECT id FROM `User` WHERE username LIKE 'furlano'))
+((SELECT id FROM `Review` WHERE feedback LIKE 'Jorjão é um deus vivo, que homão'),(SELECT id FROM `User` WHERE username LIKE 'jorjao'));
 SELECT * FROM UserReviews;
 
 INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES
@@ -127,5 +140,10 @@ INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Começou ruim, mas hoje é uma das melhores aulas'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Capacitor goes Boom'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM304')),
 ((SELECT id FROM `Review` WHERE feedback LIKE 'MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA MUDA'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
-((SELECT id FROM `Review` WHERE feedback LIKE 'I SLEEP'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM306'));
+((SELECT id FROM `Review` WHERE feedback LIKE 'I SLEEP'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM306')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Definitivamente umas das revelações do ano, professor Furlano se superou para se adaptar ao novo ambiente online'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM225')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Definitivamente umas das revelações do ano, professor Furlano se superou para se adaptar ao novo ambiente online'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Eu legitimamente não tenho ideia do que está acontecendo...'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Eu legitimamente não tenho ideia do que está acontecendo...'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Eu sou a unica pessoa que está do lado desse professor!'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303'));
 SELECT * FROM SubjectReviews;

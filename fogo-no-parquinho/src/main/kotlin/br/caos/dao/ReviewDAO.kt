@@ -1,6 +1,7 @@
 package br.caos.dao
 
 import br.caos.models.Review
+import br.caos.models.SubjectReview
 import br.caos.models.UserReview
 
 class ReviewDAO : GenericDAO {
@@ -193,6 +194,36 @@ class ReviewDAO : GenericDAO {
         finally {
             connection?.close()
             return userReview
+        }
+    }
+
+    fun getAllSubjectReviews(subId: Int): List<Any> {
+        val subReview = mutableListOf<SubjectReview>()
+        var connection : ConnectionDAO? = null
+        try {
+            connection = ConnectionDAO()
+            val resultSet = connection.executeQuery("SELECT r.id as 'reviewId', r.score, r.feedback, " +
+                    "r.creationTime, u.username as 'reviewerName', u.roleId as 'reviewerRole' FROM Review r " +
+                    "INNER JOIN SubjectReviews sr ON sr.reviewId = r.id INNER JOIN `User` u ON u.id = r.reviewerId " +
+                    "WHERE sr.reviewedSubjectId = $subId")
+            while (resultSet?.next()!!){
+                subReview.add(
+                    SubjectReview(
+                        resultSet.getInt("reviewId"),
+                        resultSet.getInt("score"),
+                        resultSet.getString("feedback"),
+                        resultSet.getString("reviewerName"),
+                        resultSet.getInt("reviewerRole"),
+                        resultSet.getDate("creationTime")
+                    )
+                )
+            }
+        } catch (ex : Exception){
+            ex.printStackTrace()
+        }
+        finally {
+            connection?.close()
+            return subReview
         }
     }
 }

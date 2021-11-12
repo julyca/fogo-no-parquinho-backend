@@ -128,6 +128,14 @@ fun main() {
                         val subInfo = Json.encodeToString(subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString()))
                         call.respond(subInfo)
                     }
+                    get("/review") {
+                        val subInfo = subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString())
+                        if (subInfo == null) {
+                            call.respond(HttpStatusCode.NotFound,"Não existe uma disciplina com o código informado")
+                        }
+                        var listReviews = Json.encodeToString(reviewControl.listSubjectReviews(subInfo!!.id)) // Adquirindo dados da requisição
+                        call.respond(listReviews)
+                    }
                 }
             }
 

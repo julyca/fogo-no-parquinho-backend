@@ -24,7 +24,7 @@ import java.time.Instant
 import java.util.*
 
 fun main() {
-    val userControl : UserController = UserController()
+    val userControl = UserController()
     val reviewControl = ReviewController()
     val subjectControl = SubjectController()
 
@@ -63,7 +63,7 @@ fun main() {
                             .withAudience(SharedPaths.JWT_AUD)
                             .withIssuer(SharedPaths.JWT_ISS)
                             .withClaim("username", loginInfo.username)
-                            .withExpiresAt(Date(System.currentTimeMillis() + 900000))
+                            .withExpiresAt(Date(System.currentTimeMillis() + 90000000)) // OBS: Por questões de segurança, o tempo de expiração é de 15 min, MAS por questão de praticidade no estudo vai ser de 25 horas ( ❛ ᴗ ❛.)
                             .sign(Algorithm.HMAC256(SharedPaths.JWT_SECRET))
                         call.respond(HttpStatusCode.OK,"{ \"token\" : \"$token\"}") // devolvendo token para o front-end
                     } else {
@@ -107,6 +107,14 @@ fun main() {
                         val userInfo = Json.encodeToString(userControl.getUserInfo(call.parameters["userCode"].toString()))
                         call.respond(userInfo)
                     }
+                    get("/review") {
+                        val userInfo = userControl.getUserInfo(call.parameters["userCode"].toString())
+                        if (userInfo == null) {
+                            call.respond(HttpStatusCode.NotFound,"Não existe um usuário com o código informado")
+                        }
+                        var listReviews = Json.encodeToString(reviewControl.listUserReviews(userInfo!!.id)) // Adquirindo dados da requisição
+                        call.respond(listReviews)
+                    }
                 }
             }
 
@@ -141,7 +149,7 @@ fun main() {
                             val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
                             reviewDto.review.reviewerId = currentUser!!.id
 
-                            reviewControl.reviewSubject(reviewDto.userId, reviewDto.review)
+                            reviewControl.reviewUser(reviewDto.userId, reviewDto.review)
                         }
                     }
                 }

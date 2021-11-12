@@ -2,7 +2,12 @@ package br.caos.controller
 
 import br.caos.dao.ReviewDAO
 import br.caos.models.Review
+import br.caos.models.User
+import br.caos.models.UserReview
 import br.caos.view.ReviewDto
+import br.caos.view.SubjectDto
+import br.caos.view.UserDto
+import br.caos.view.UserReviewDto
 import java.util.*
 
 class ReviewController {
@@ -34,5 +39,14 @@ class ReviewController {
             return _reviewDAO.reviewUser(userId, review.id)
         }
         return false
+    }
+
+    fun listUserReviews(userId: Int):List<UserReviewDto>{
+        val list = _reviewDAO.getAllUserReviews(userId) as List<UserReview>
+        var result = mutableListOf<UserReviewDto>()
+        for (review in list){
+            result.add(review.toDto())
+        }
+        return result
     }
 }

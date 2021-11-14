@@ -21,6 +21,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
+import java.time.LocalDateTime
 import java.util.*
 
 fun main() {
@@ -32,6 +33,7 @@ fun main() {
         install(CORS){
             anyHost()
             method(HttpMethod.Options)
+            header(HttpHeaders.Authorization)
         }
         install(Authentication){
             jwt("auth-jwt"){
@@ -56,6 +58,7 @@ fun main() {
 
             post("/login") {
                 try {
+                    println("[${LocalDateTime.now()}] POST login") // Exibindo quando o método foi chamado para fins de Log
                     val loginInfo = Json.decodeFromString<LoginDto>(call.receiveText()) // Adquirindo dados da requisição
                     val wasLoginSuccessful = userControl.login(loginInfo) // Validando os dados recebidos
                     if (wasLoginSuccessful){ // Se os dados estão corretos (login valido), gerar token de autenticação
@@ -79,6 +82,7 @@ fun main() {
 
             post("/register") {
                 try {
+                    println("[${LocalDateTime.now()}] POST register") // Exibindo quando o método foi chamado para fins de Log
                     val userDto = Json.decodeFromString<UserDto>(call.receiveText()) // Adquirindo dados da requisição
                     val wasCreated = userControl.registerUser(userDto)
                     if (wasCreated) // Se usuário foi cadastrado com sucesso
@@ -94,20 +98,23 @@ fun main() {
 
             route("/users") {
                 get {
-
+                    println("[${LocalDateTime.now()}] GET users") // Exibindo quando o método foi chamado para fins de Log
                     val userList = Json.encodeToString(userControl.listAllUsers())
                     call.respond(userList)
                 }
                 get("/roles") {
+                    println("[${LocalDateTime.now()}] GET users/role") // Exibindo quando o método foi chamado para fins de Log
                     val listRoles = Json.encodeToString(userControl.listAllRoles())
                     call.respond(listRoles)
                 }
                 route("/{userCode}") {
                     get {
+                        println("[${LocalDateTime.now()}] GET users/${call.parameters["userCode"].toString()}/review") // Exibindo quando o método foi chamado para fins de Log
                         val userInfo = Json.encodeToString(userControl.getUserInfo(call.parameters["userCode"].toString()))
                         call.respond(userInfo)
                     }
                     get("/review") {
+                        println("[${LocalDateTime.now()}] GET users/${call.parameters["userCode"].toString()}/review")
                         val userInfo = userControl.getUserInfo(call.parameters["userCode"].toString())
                         if (userInfo == null) {
                             call.respond(HttpStatusCode.NotFound,"Não existe um usuário com o código informado")
@@ -125,10 +132,12 @@ fun main() {
                 }
                 route("/{subjectCode}") {
                     get {
+                        println("[${LocalDateTime.now()}] GET subjects/${call.parameters["subjectCode"].toString()}") // Exibindo quando o método foi chamado para fins de Log
                         val subInfo = Json.encodeToString(subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString()))
                         call.respond(subInfo)
                     }
                     get("/review") {
+                        println("[${LocalDateTime.now()}] GET subjects/${call.parameters["subjectCode"].toString()}/review")
                         val subInfo = subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString())
                         if (subInfo == null) {
                             call.respond(HttpStatusCode.NotFound,"Não existe uma disciplina com o código informado")
@@ -143,6 +152,7 @@ fun main() {
                 route("/users") {
                     route("/{userCode}") {
                         post("/subject") {
+                            println("[${LocalDateTime.now()}] POST users/${call.parameters["subjectCode"].toString()}/subject") // Exibindo quando o método foi chamado para fins de Log
                             var relateDto = Json.decodeFromString<RelateSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
                             // recuperando dados do usuário da sessão
                             val principal = call.principal<JWTPrincipal>()
@@ -151,19 +161,41 @@ fun main() {
                             userControl.relateSubject(relateDto.subjectId, currentUser!!.id)
                         }
                         post("/review") {
-                            var reviewDto = Json.decodeFromString<ReviewUserDto>(call.receiveText()) // Adquirindo dados da requisição
-                            // recuperando dados do usuário da sessão
-                            val principal = call.principal<JWTPrincipal>()
-                            val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
-                            reviewDto.review.reviewerId = currentUser!!.id
+                            println("[${LocalDateTime.now()}] POST users/${call.parameters["userCode"].toString()}/review") // Exibindo quando o método foi chamado para fins de Log
 
-                            reviewControl.reviewUser(reviewDto.userId, reviewDto.review)
+                            val userInfo = userControl.getUserInfo(call.parameters["userCode"].toString())
+                            if (userInfo == null)
+                                call.respond(HttpStatusCode.NotFound,"Não existe uma disciplina com o código informado")
+
+                            try {
+                                var reviewDto = Json.decodeFromString<ReviewDto>(call.receiveText()) // Adquirindo dados da requisição
+                                // recuperando dados do usuário da sessão
+                                val principal = call.principal<JWTPrincipal>()
+                                val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
+
+                                if(currentUser == null)
+                                    call.respond(HttpStatusCode.Unauthorized,"Ocorreu um erro ao validar os dados da sessão")
+                                if(currentUser!!.id == userInfo!!.id)
+                                    call.respond(HttpStatusCode.BadRequest,"Você não pode se auto-avaliar ;)")
+
+                                reviewDto.reviewerId = currentUser!!.id
+
+                                val wasCreated = reviewControl.reviewUser(userInfo!!.id, reviewDto)
+                                if (wasCreated)
+                                    call.respond(HttpStatusCode.OK,"Review feita com sucesso! Agradecemos pela avaliação!")
+                                else
+                                    call.respond(HttpStatusCode.InternalServerError, "Ocorreu um erro ao tentar registrar a review")
+                            } catch (ex: Exception){
+                                ex.printStackTrace()
+                                call.respond(HttpStatusCode.BadRequest,"O formato dos dados enviados está incorreto.")
+                            }
                         }
                     }
                 }
 
                 route("/subjects") {
                     post {
+                        println("[${LocalDateTime.now()}] POST subjects") // Exibindo quando o método foi chamado para fins de Log
                         try {
                             val subDto = Json.decodeFromString<SubjectDto>(call.receiveText()) // Adquirindo dados da requisição
                             val wasCreated = subjectControl.registerSubject(subDto)
@@ -178,13 +210,28 @@ fun main() {
                     }
                     route("/{subjectCode}") {
                         post("/review") {
-                            var reviewDto = Json.decodeFromString<ReviewSubjectDto>(call.receiveText()) // Adquirindo dados da requisição
-                            // recuperando dados do usuário da sessão
-                            val principal = call.principal<JWTPrincipal>()
-                            val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
-                            reviewDto.review.reviewerId = currentUser!!.id
+                            println("[${LocalDateTime.now()}] POST subjects/${call.parameters["subjectCode"].toString()}/review") // Exibindo quando o método foi chamado para fins de Log
 
-                            reviewControl.reviewSubject(reviewDto.subjectId, reviewDto.review)
+                            val subjectInfo = subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString())
+                            if (subjectInfo == null)
+                                call.respond(HttpStatusCode.NotFound,"Não existe uma disciplina com o código informado")
+
+                            try {
+                                var reviewDto = Json.decodeFromString<ReviewDto>(call.receiveText()) // Adquirindo dados da requisição
+                                // recuperando dados do usuário da sessão
+                                val principal = call.principal<JWTPrincipal>()
+                                val currentUser = userControl.getUserByName(principal!!.payload.getClaim("username").asString())
+                                reviewDto.reviewerId = currentUser!!.id
+
+                                val wasCreated = reviewControl.reviewSubject(subjectInfo!!.id, reviewDto)
+                                if (wasCreated)
+                                    call.respond(HttpStatusCode.OK,"Review feita com sucesso! Agradecemos pela avaliação!")
+                                else
+                                    call.respond(HttpStatusCode.InternalServerError, "Ocorreu um erro ao tentar registrar a review")
+                            } catch (ex: Exception){
+                                ex.printStackTrace()
+                                call.respond(HttpStatusCode.BadRequest,"O formato dos dados enviados está incorreto.")
+                            }
                         }
                     }
                 }

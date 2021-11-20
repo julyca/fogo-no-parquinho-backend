@@ -112,7 +112,20 @@ INSERT INTO Review (feedback,score,creationTime,reviewerId) VALUES
 ('Definitivamente umas das revelações do ano, professor Furlano se superou para se adaptar ao novo ambiente online',8,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
 ('Eu legitimamente não tenho ideia do que está acontecendo...',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'dono')),
 ('Eu legitimamente não tenho ideia do que está acontecendo...',1,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
-('Eu sou a unica pessoa que está do lado desse professor!',9,NOW(),(SELECT id FROM `User` WHERE username LIKE 'chorao'));
+('Eu sou a unica pessoa que está do lado desse professor!',9,NOW(),(SELECT id FROM `User` WHERE username LIKE 'chorao')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru')),
+('Redacted',5,NOW(),(SELECT id FROM `User` WHERE username LIKE 'rangeru'));
 SELECT * FROM Review;
 
 INSERT INTO UserSubjects (userId,subjectId) VALUES
@@ -145,5 +158,16 @@ INSERT INTO SubjectReviews (reviewId,reviewedSubjectId) VALUES
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Definitivamente umas das revelações do ano, professor Furlano se superou para se adaptar ao novo ambiente online'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Eu legitimamente não tenho ideia do que está acontecendo...'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
 ((SELECT id FROM `Review` WHERE feedback LIKE 'Eu legitimamente não tenho ideia do que está acontecendo...'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
-((SELECT id FROM `Review` WHERE feedback LIKE 'Eu sou a unica pessoa que está do lado desse professor!'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303'));
+((SELECT id FROM `Review` WHERE feedback LIKE 'Eu sou a unica pessoa que está do lado desse professor!'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM303')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM251')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM253')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM251')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM251')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM304')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM304')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM304')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM225')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM225')),
+((SELECT id FROM `Review` WHERE feedback LIKE 'Redacted'),(SELECT id FROM `Subject` WHERE code LIKE 'ECM225'));
 SELECT * FROM SubjectReviews;

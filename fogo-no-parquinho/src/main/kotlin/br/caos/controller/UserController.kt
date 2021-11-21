@@ -12,7 +12,7 @@ class UserController {
     private val _userDAO : UserDAO = UserDAO()
 
     /** Método que realiza a criação de um Usuário (User)
-     * @param dto Entidade que contém os dados necessários para o cadatro do Usuário. Ex: nome, senha, nome de usuário, etc.
+     * @param dto Entidade que contém os dados necessários para o cadastro do Usuário. Ex: nome, senha, nome de usuário, etc.
      * @return Retorna Falso somente em caso de erro durante a criação da entidade.
      * */
     fun registerUser(dto : UserDto) : Boolean {
@@ -55,6 +55,9 @@ class UserController {
         return result
     }
 
+    /**busca usuario pelo apelido
+     * @return
+     */
     fun getUserByName(username:String):User?{
         try {
             return _userDAO.getByUsername(username)
@@ -64,6 +67,9 @@ class UserController {
         return null
     }
 
+    /**Lista todos os usuarios
+     * @return lista todos os usuarios
+     */
     fun listAllUsers():List<UserDto>{
         val list = _userDAO.getAll() as List<User>
         var result = mutableListOf<UserDto>()
@@ -73,6 +79,9 @@ class UserController {
         return result
     }
 
+    /**Lista todos as função
+     * @return lista todos os função
+     */
     fun listAllRoles():List<RoleDto>{
         val list = _userDAO.getRoles() as List<UserRoles>
         var result = mutableListOf<RoleDto>()
@@ -85,6 +94,9 @@ class UserController {
         return _userDAO.getByCode(code)?.toDto()
     }
 
+    /**Relaciona professores com materias
+     * @return a associaçao professores com materias
+     */
     fun relateSubject(subjectId:Int, userId:Int):Boolean {
         return _userDAO.relateSubject(subjectId,userId)
     }

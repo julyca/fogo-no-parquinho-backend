@@ -62,7 +62,7 @@ fun Route.createSubjectRoute(subjectControl: SubjectController){
 }
 
 fun Route.reviewSubjectRoute(subjectControl: SubjectController, userControl: UserController, reviewControl: ReviewController){
-    post("/review") {
+    post("/subjects/{subjectCode}/review") {
         println("[${LocalDateTime.now()}] POST subjects/${call.parameters["subjectCode"].toString()}/review") // Exibindo quando o método foi chamado para fins de Log
 
         val subjectInfo = subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString())

@@ -16,6 +16,13 @@ import kotlinx.serialization.json.Json
 import java.time.LocalDateTime
 import java.util.*
 
+/*** Método que configura rota de Login do Usuário, permitindo o seu acesso a zonas protegidas da API.
+ *  Recebe JSON Body com nome de usuário (username) e senha (password, deve ser enviada em Hash)
+ *  @param userControl referência ao controller de usuário para efetuar as operações
+ *  @return 200: Token que deve ser usado para autenticação do usuário;
+ *  401: texto informando que as credenciais são inválidas;
+ *  400: texto informando que o JSON enviado está no formato incorreto.
+ */
 fun Route.loginRoute(userControl : UserController) {
     post("/login") {
         try {
@@ -41,6 +48,14 @@ fun Route.loginRoute(userControl : UserController) {
     }
 }
 
+/*** Método que configura rota de Cadastro do Usuário, permitindo o seu registro no sistema.
+ *  Recebe JSON Body com nome de usuário (username), senha (password, deve ser enviada em Hash),
+ *  código (code), nome completo (fullName) e tipo de perfil (roleId)
+ *  @param userControl referência ao controller de usuário para efetuar as operações
+ *  @return 200: texto informando registro efetuado com sucesso;
+ *  500: texto informando erro ao realizar o registro;
+ *  400: texto informando que o JSON enviado está no formato incorreto.
+ */
 fun Route.createAccountRoute(userControl : UserController) {
     post("/register") {
         try {

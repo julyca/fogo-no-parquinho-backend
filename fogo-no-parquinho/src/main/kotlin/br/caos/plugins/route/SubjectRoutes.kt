@@ -17,6 +17,11 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.LocalDateTime
 
+/*** Método que lista todas as disciplinas cadastradas (SEM PAGINAÇÃO).
+ *  @param subjectControl referência ao controller de disciplinas para efetuar as operações
+ *  @return 200: listagem de disciplinas como objeto JSON;
+ *  500: erro ocorrido ao tentar realizar listagem.
+ */
 fun Route.getAllSubjectRoute(subjectControl: SubjectController){
     get("/subjects") {
         val subList = Json.encodeToString(subjectControl.listAllSubjects())
@@ -24,14 +29,31 @@ fun Route.getAllSubjectRoute(subjectControl: SubjectController){
     }
 }
 
+/*** Método que consulta as informações de uma disciplina.
+ *  @param subjectControl referência ao controller de disciplinas para efetuar as operações
+ *  @return 200: JSON object com os dados da disciplina;
+ *  404: texto informando que não existe matéria com o código informado;
+ *  400: texto informando que o JSON enviado está no formato incorreto;
+ *  500: erro ocorrido ao tentar realizar listagem.
+ */
 fun Route.getSubjectInfoRoute(subjectControl: SubjectController){
     get("/subjects/{subjectCode}") {
         println("[${LocalDateTime.now()}] GET subjects/${call.parameters["subjectCode"].toString()}") // Exibindo quando o método foi chamado para fins de Log
-        val subInfo = Json.encodeToString(subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString()))
-        call.respond(subInfo)
+        val subInfo = subjectControl.getSubjectInfo(call.parameters["subjectCode"].toString())
+        if (subInfo == null) {
+            call.respond(HttpStatusCode.NotFound,"Não existe uma disciplina com o código informado")
+        }
+        call.respond(Json.encodeToString(subInfo))
     }
 }
 
+/*** Método que lista todas as avaliações feitas sobre UMA disciplina (SEM PAGINAÇÃO).
+ *  @param subjectControl referência ao controller de disciplinas para efetuar as operações
+ *  @param reviewControl referência ao controller de avaliações para efetuar as operações
+ *  @return 200: listagem de avaliações como objeto JSON;
+ *  404: texto informando que não existe matéria com o código informado;
+ *  500: erro ocorrido ao tentar realizar listagem.
+ */
 fun Route.getSubjectReviewsRoute(subjectControl: SubjectController, reviewControl: ReviewController){
     get("/subjects/{subjectCode}/review") {
         println("[${LocalDateTime.now()}] GET subjects/${call.parameters["subjectCode"].toString()}/review")
@@ -44,6 +66,13 @@ fun Route.getSubjectReviewsRoute(subjectControl: SubjectController, reviewContro
     }
 }
 
+/*** Método que permite o registro de uma nova disciplina (EXIGE AUTENTICAÇÃO).
+ *  Recebe JSON Body com nome da disciplina (name), código (code) e descrição (description)
+ *  @param subjectControl referência ao controller de disciplinas para efetuar as operações
+ *  @return 200: texto informando registro efetuado com sucesso;
+ *  500: texto informando erro ao realizar o registro;
+ *  400: texto informando que o JSON enviado está no formato incorreto.
+ */
 fun Route.createSubjectRoute(subjectControl: SubjectController){
     post("/subjects") {
         println("[${LocalDateTime.now()}] POST subjects") // Exibindo quando o método foi chamado para fins de Log
@@ -61,6 +90,16 @@ fun Route.createSubjectRoute(subjectControl: SubjectController){
     }
 }
 
+/*** Método que permite o registro de uma nova REVIEW feita sobre UMA disciplina ESPECÍFICA (EXIGE AUTENTICAÇÃO).
+ *  Recebe JSON Body com o texto da avaliação (feedback) e a nota (score)
+ *  @param subjectControl referência ao controller de disciplinas para efetuar as operações
+ *  @param userControl referência ao controller de usuário para efetuar as operações
+ *  @param reviewControl referência ao controller de avaliações para efetuar as operações
+ *  @return 200: texto informando registro efetuado com sucesso;
+ *  500: texto informando erro ao realizar o registro;
+ *  404: texto informando que não existe matéria com o código informado;
+ *  400: texto informando que o JSON enviado está no formato incorreto.
+ */
 fun Route.reviewSubjectRoute(subjectControl: SubjectController, userControl: UserController, reviewControl: ReviewController){
     post("/subjects/{subjectCode}/review") {
         println("[${LocalDateTime.now()}] POST subjects/${call.parameters["subjectCode"].toString()}/review") // Exibindo quando o método foi chamado para fins de Log

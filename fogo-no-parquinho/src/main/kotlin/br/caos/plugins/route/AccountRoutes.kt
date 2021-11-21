@@ -41,7 +41,7 @@ fun Route.loginRoute(userControl : UserController) {
     }
 }
 
-fun Route.createAccountRoute(userControl : UserController){
+fun Route.createAccountRoute(userControl : UserController) {
     post("/register") {
         try {
             println("[${LocalDateTime.now()}] POST register") // Exibindo quando o método foi chamado para fins de Log

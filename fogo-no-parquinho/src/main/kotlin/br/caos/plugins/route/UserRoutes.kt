@@ -1,4 +1,4 @@
-package br.caos.plugins.route.users
+package br.caos.plugins.route
 
 import br.caos.controller.ReviewController
 import br.caos.controller.UserController

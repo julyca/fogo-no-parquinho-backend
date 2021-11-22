@@ -56,7 +56,7 @@ class UserController {
     }
 
     /**busca usuario pelo apelido
-     * @return
+     * @return os deetalhes do usuario
      */
     fun getUserByName(username:String):User?{
         try {
@@ -90,6 +90,10 @@ class UserController {
         }
         return result
     }
+
+    /**
+     * puxa os detalhes de usuario
+     */
     fun getUserInfo(code : String) : UserDto?{
         return _userDAO.getByCode(code)?.toDto()
     }

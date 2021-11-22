@@ -37,6 +37,10 @@ class SubjectController {
         }
         return result
     }
+
+    /**Puxa detalhes de uma materia apartir de seu codigo
+     *
+     */
     fun getSubjectInfo(code : String) : SubjectDto?{
         return _subjectDAO.getByCode(code)?.toDto()
     }

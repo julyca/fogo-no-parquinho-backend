@@ -119,6 +119,10 @@ class ReviewDAO : GenericDAO {
         }
     }
 
+    /** Método que adiciona uma nova entidade à base de dados
+     * @param element elemento a ser adicionado
+     * @return Retorna verdadeiro caso a entidade tenha sido adicionada com sucesso
+     * */
     fun reviewSubject(subId : Int, reviewId: Int) : Boolean {
         var result: Boolean = true
         var connection : ConnectionDAO? = null
@@ -196,7 +200,10 @@ class ReviewDAO : GenericDAO {
             return userReview
         }
     }
-
+    /** Método que adiciona uma nova entidade à base de dados
+     * @param element elemento a ser adicionado
+     * @return Retorna verdadeiro caso a entidade tenha sido adicionada com sucesso
+     * */
     fun getAllSubjectReviews(subId: Int): List<Any> {
         val subReview = mutableListOf<SubjectReview>()
         var connection : ConnectionDAO? = null

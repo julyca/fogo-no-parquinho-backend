@@ -15,6 +15,7 @@ data class User (
     fun toDto(): UserDto  = UserDto(
         id,
         username,
+        password,
         code,
         fullName,
         roleId

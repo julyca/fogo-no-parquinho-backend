@@ -2,6 +2,7 @@ package br.caos.dao
 
 import br.caos.models.Subject
 import br.caos.models.User
+import br.caos.view.SubjectDto
 
 class SubjectDAO : GenericDAO {
     override fun insert(element: Any): Boolean {
@@ -97,7 +98,6 @@ class SubjectDAO : GenericDAO {
             return result
         }
     }
-
     override fun delete(id: Int): Boolean {
         var connection : ConnectionDAO? = null
         var result : Boolean = true
@@ -116,6 +116,10 @@ class SubjectDAO : GenericDAO {
         }
     }
 
+    /** Método que resgata os dados de uma matéria a partir do seu código
+     *  @param code [String] Código da Disciplina. Ex.: ECM251.
+     *  @return dados da matéria como objeto [Subject].
+     */
     fun getByCode(code:String) : Subject? {
         var subject : Subject? = null
         var connection : ConnectionDAO? = null

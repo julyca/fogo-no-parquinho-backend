@@ -9,7 +9,7 @@ Como proposta inicial, todos os usuários podem comentar um sobre os outros:
 - E um aluno pode comentar sobre o desempenho de outros alunos, por exemplo o quão bom é fazer trabalho com o outro.
 
 ## Sobre a aplicação
-API feita em Kotlin que implementa as funções básicas definidas para o produto "Fogo no Parquinho". Para conexão com o banco de dados está sendo utilizada uma VM com MariaDB, para facilitar na criação do banco de dados bem como sua população na pasta `\database` deste projeto tem disponivel um script SQL para a criação e população da base de dados.
+API feita em Kotlin que implementa as funções básicas definidas para o produto "Fogo no Parquinho". Para conexão com o banco de dados está sendo utilizada uma VM com MariaDB, para facilitar na criação do banco de dados bem como sua população na pasta `\data` deste projeto tem disponivel um script SQL para a criação e população da base de dados.
 
 OBS: Vale ressaltar que em caso de erro ao rodar o script como um todo deve ser executado comando por comando.
 
@@ -47,6 +47,90 @@ Exemplo do retorno Token JWT HS256:
 }
 ```
 
-#### GET /users
-Listagem de todos os usuários cadastrados na aplicação (Não Paginada)
+### GET /users
+Listagem de todos os usuários cadastrados na aplicação. (Não Paginada)
+
+Exemplo de retorno:
+```
+[
+    {
+        "id" : "0",
+        "username" : "agenteP",
+        "code" : "00.00000-0",
+        "fullName" : "Perry o Ornitorrinco",
+        "roleId" : "0"
+    }
+]
+```
+
+### GET /users/roles
+Listagem de todos os tipos de perfil de usuário existentes na aplicação. (Não Paginada)
+
+Exemplo de retorno:
+```
+[
+    {
+        "id" : "0",
+        "roleName" : "professor"
+    }
+]
+```
+
+### GET /users/{userCode}
+Retorna os dados de um usuário especifico, com base no código informado.
+
+Exemplo de retorno:
+```
+{
+    "id" : "0",
+    "username" : "agenteP",
+    "code" : "00.00000-0",
+    "fullName" : "Perry o Ornitorrinco",
+    "roleId" : "0"
+}
+```
+
+### GET /users/{userCode}/review
+Listagem de todas as avaliações feitas sobre um usuário especifico, com base no código informado. (Não Paginada)
+
+Exemplo de retorno:
+```
+[
+    {
+        "reviewId" : "0",
+        "score" : "0",
+        "feedback" : "odeio muito tudo isso"
+        "reviewerName" : "agenteP",
+        "reviewerRole" : "0",
+        "creationTime" : "2021-11-11"
+    }
+]
+```
+
+### POST /users/{userCode}/review
+Registro de nova avaliação feita sobre o usuário identificado (pelo código informado). **REQUER AUTENTICAÇÃO**
+
+Exemplo de JSON Body:
+```
+{
+    "score" : "0",
+    "feedback" : "odeio muito tudo isso"
+}
+```
+
+### POST /users/subject
+Registra relação entre usuário e a disciplina identificada (pelo código informado). **REQUER AUTENTICAÇÃO**
+
+O relacionamento deve ser interpretado de acordo com a função/perfil do usuário. Ex:
+- Se o usuário for de perfil `professor` -> Usuário leciona Disciplina
+- Se o usuário for de perfil `aluno` -> Aluno cursa/cursou Disciplina
+
+Exemplo de JSON Body:
+```
+{
+    "subjectId" : "0"
+}
+```
+
+
 

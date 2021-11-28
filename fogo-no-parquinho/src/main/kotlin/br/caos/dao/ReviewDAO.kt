@@ -75,7 +75,6 @@ class ReviewDAO : GenericDAO {
             return review
         }
     }
-
     override fun update(element: Any): Boolean {
         var connection : ConnectionDAO? = null
         var review : Review
@@ -100,7 +99,6 @@ class ReviewDAO : GenericDAO {
             return result
         }
     }
-
     override fun delete(id: Int): Boolean {
         var connection : ConnectionDAO? = null
         var result : Boolean = true
@@ -119,9 +117,10 @@ class ReviewDAO : GenericDAO {
         }
     }
 
-    /** Método que adiciona uma nova entidade à base de dados
-     * @param element elemento a ser adicionado
-     * @return Retorna verdadeiro caso a entidade tenha sido adicionada com sucesso
+    /** Método que relaciona uma review como a avaliação de uma MATÉRIA.
+     * @param reviewId [Int] Identificador da avaliação
+     * @param subId [Int] Identificador da disciplina
+     * @return Verdadeiro caso a relação tenha sido estabelecida com sucesso
      * */
     fun reviewSubject(subId : Int, reviewId: Int) : Boolean {
         var result: Boolean = true
@@ -147,6 +146,11 @@ class ReviewDAO : GenericDAO {
         }
     }
 
+    /** Método que relaciona uma review como a avaliação de um USUÁRIO.
+     * @param reviewId [Int] Identificador da avaliação
+     * @param userId [Int] Identificador do usuário
+     * @return Verdadeiro caso a relação tenha sido estabelecida com sucesso
+     * */
     fun reviewUser(userId : Int, reviewId: Int) : Boolean {
         var result: Boolean = true
         var connection : ConnectionDAO? = null
@@ -171,6 +175,10 @@ class ReviewDAO : GenericDAO {
         }
     }
 
+    /**Método que lista todas as avaliações feitas sobre um usuário.
+     * @param userId [Int] Identificador do usuário consultado.
+     * @return lista com as avaliações do usuário.
+     */
     fun getAllUserReviews(userId: Int): List<Any> {
         val userReview = mutableListOf<UserReview>()
         var connection : ConnectionDAO? = null
@@ -200,10 +208,11 @@ class ReviewDAO : GenericDAO {
             return userReview
         }
     }
-    /** Método que adiciona uma nova entidade à base de dados
-     * @param element elemento a ser adicionado
-     * @return Retorna verdadeiro caso a entidade tenha sido adicionada com sucesso
-     * */
+
+    /** Método que lista todas as avaliações feitas sobre uma matéria.
+     * @param subId [Int] Identificador da matéria consultada.
+     * @return lista com as avaliações da matéria.
+     */
     fun getAllSubjectReviews(subId: Int): List<Any> {
         val subReview = mutableListOf<SubjectReview>()
         var connection : ConnectionDAO? = null

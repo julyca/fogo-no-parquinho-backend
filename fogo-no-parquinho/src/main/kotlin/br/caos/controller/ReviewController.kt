@@ -10,8 +10,9 @@ import java.util.*
 
 class ReviewController {
     private val _reviewDAO : ReviewDAO = ReviewDAO()
-    /** Método que realiza a criação de um Avaliaçao (Review)
-     * @param dto Entidade que contém os dados necessários para o cadastro da Avaliaçao. Ex: nota, recomendaçao, etc.
+
+    /** Método que realiza a criação de uma Avaliação (Review)
+     * @param dto [ReviewDto] Entidade que contém os dados necessários para o cadastro da Avaliação. Ex: nota, recomendação, etc.
      * @return Retorna Falso somente em caso de erro durante a criação da entidade.
      * */
     private fun registerReview(dto : ReviewDto) : Boolean {
@@ -25,8 +26,10 @@ class ReviewController {
         }
         return result
     }
-    /** Método que realiza a criação de um Avaliaçao de Materia(Review)
-     * @param dto Entidade que registrou como uma avaliaçao de materia.
+
+    /** Método que realiza a criação de um Avaliação de Matéria (Review)
+     * @param subjectId [Int] Identificador da disciplina que está sendo avaliada.
+     * @param dto [ReviewDto] Entidade que contém os dados necessários para o cadastro da Avaliação. Ex: nota, recomendação, etc.
      * @return Retorna Falso somente em caso de erro durante a criação da entidade.
      * */
     fun reviewSubject(subjectId : Int, dto: ReviewDto) : Boolean {
@@ -36,8 +39,10 @@ class ReviewController {
         }
         return false
     }
+
     /** Método que realiza a criação de um Avaliaçao de Usuario(Review)
-     * @param dto Entidade que registrou como uma avaliaçao de usuario.
+     * @param userId [Int] Identificador do usuário que está sendo avaliado.
+     * @param dto [ReviewDto] Entidade que contém os dados necessários para o cadastro da Avaliação. Ex: nota, recomendação, etc.
      * @return Retorna Falso somente em caso de erro durante a criação da entidade.
      * */
     fun reviewUser(userId : Int, dto: ReviewDto) : Boolean {
@@ -47,8 +52,10 @@ class ReviewController {
         }
         return false
     }
-    /**Lista todos as avaliações de usuarios
-     * @return lista todos os avaliações de usuarios
+
+    /**Método que lista todas as avaliações feitas sobre um usuário.
+     * @param userId [Int] Identificador do usuário consultado.
+     * @return lista com as avaliações do usuário.
      */
     fun listUserReviews(userId: Int):List<UserReviewDto>{
         val list = _reviewDAO.getAllUserReviews(userId) as List<UserReview>
@@ -58,8 +65,10 @@ class ReviewController {
         }
         return result
     }
-    /**Lista todos as avaliações de materias
-     * @return lista todos os avaliações de materias
+
+    /** Método que lista todas as avaliações feitas sobre uma matéria.
+     * @param subjectId [Int] Identificador da matéria consultada.
+     * @return lista com as avaliações da matéria.
      */
     fun listSubjectReviews(subjectId: Int):List<SubjectReviewDto>{
         val list = _reviewDAO.getAllSubjectReviews(subjectId) as List<SubjectReview>

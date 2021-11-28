@@ -11,7 +11,7 @@ import java.util.*
  * @param feedback [String] Comentário feito pelo avaliador durante a review.
  * @param reviewerName [String] Nome de identificação do usuário que realizou a avaliação.
  * @param reviewerRole [Int] Identificador da função do usuário que realizou a avaliação
- * @param creationTime [Date] Data e horário de criação da avaliação feita sobre a máteria
+ * @param creationTime [String] Data e horário de criação da avaliação feita sobre a máteria
  */
 @Serializable
 class SubjectReviewDto (

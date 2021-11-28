@@ -50,7 +50,7 @@ fun Route.getUserRolesRoute(userControl: UserController){
  */
 fun Route.getUserInfoRoute(userControl: UserController){
     get("/users/{userCode}") {
-        println("[${LocalDateTime.now()}] GET users/${call.parameters["userCode"].toString()}/review") // Exibindo quando o método foi chamado para fins de Log
+        println("[${LocalDateTime.now()}] GET users/${call.parameters["userCode"].toString()}") // Exibindo quando o método foi chamado para fins de Log
         val userInfo = userControl.getUserInfo(call.parameters["userCode"].toString())
         if (userInfo == null) {
             call.respond(HttpStatusCode.NotFound,"Não existe um usuário com o código informado")

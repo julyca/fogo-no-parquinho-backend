@@ -1,7 +1,7 @@
 # fogo-no-parquinho-backend
 Este é o GitHub do backend da aplicação: Fogo no Parquinho
 
-Para ver mais sobre o frontend do projeto acesse o GitHub: https://github.com/ViniGd/cpa_evolution
+Para ver mais sobre o frontend do projeto acesse o GitHub: [CPA Evolution](https://github.com/ViniGd/cpa_evolution)
 
 ## Sobre o projeto
 "Fogo no Parquinho" consiste no projeto de avaliações entre alunos e professores com o fim de avaliar o desempenho do profissional, do estudante e das disciplinas do curso oferecido.
@@ -16,6 +16,7 @@ API feita em Kotlin que implementa as funções básicas definidas para o produt
 OBS: Vale ressaltar que em caso de erro ao rodar o script como um todo deve ser executado comando por comando.
 
 Para uma melhor visualização da estrutura do banco de dados, foi criado um DER (Diagrama de Entidade e Relacionamento) para ilustrar as tabelas do banco de dados.
+
 ![DER Fogo no Parquinho](./data/DER_fogo_no_parquinho.jfif)
 
 ### Consumindo a API

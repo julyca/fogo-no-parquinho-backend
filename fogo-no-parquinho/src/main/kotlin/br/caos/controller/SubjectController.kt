@@ -11,7 +11,7 @@ class SubjectController {
     private val _subjectDAO : SubjectDAO = SubjectDAO()
 
     /** Método que realiza a criação de uma Materia (Subject)
-     * @param dto Entidade que contém os dados necessários para o cadastro do Materia. Ex: codigo, nome, descriçao, etc.
+     * @param dto [SubjectDto] Entidade que contém os dados necessários para o cadastro da Matéria. (código, nome, descrição).
      * @return Retorna Falso somente em caso de erro durante a criação da entidade.
      * */
     fun registerSubject(dto : SubjectDto) : Boolean {
@@ -26,8 +26,8 @@ class SubjectController {
         return result
     }
 
-    /**lista todas as Materias
-     * @return lista todas as Materias
+    /** Método que lista todas as Matérias
+     * @return todas as Matérias com lista de objetos [SubjectDto] (id, código, nome, descrição, creationTime)
      */
     fun listAllSubjects():List<SubjectDto>{
         val list = _subjectDAO.getAll() as List<Subject>
@@ -38,8 +38,9 @@ class SubjectController {
         return result
     }
 
-    /**Puxa detalhes de uma materia apartir de seu codigo
-     *
+    /** Método que resgata os dados de uma matéria a partir do seu código
+     *  @param code [String] Código da Disciplina. Ex.: ECM251.
+     *  @return dados da matéria como objeto [SubjectDto].
      */
     fun getSubjectInfo(code : String) : SubjectDto?{
         return _subjectDAO.getByCode(code)?.toDto()

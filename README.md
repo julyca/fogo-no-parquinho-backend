@@ -1,6 +1,8 @@
 # fogo-no-parquinho-backend
 Este é o GitHub do backend da aplicação: Fogo no Parquinho
 
+Para ver mais sobre o frontend do projeto acesse o GitHub: https://github.com/ViniGd/cpa_evolution
+
 ## Sobre o projeto
 "Fogo no Parquinho" consiste no projeto de avaliações entre alunos e professores com o fim de avaliar o desempenho do profissional, do estudante e das disciplinas do curso oferecido.
 Como proposta inicial, todos os usuários podem comentar um sobre os outros: 

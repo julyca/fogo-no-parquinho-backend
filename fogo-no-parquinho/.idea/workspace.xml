@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca09a87b-9371-47d4-9233-758d24ebb132" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/br-caos-fogo-no-parquinho.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/controller/SubjectController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/controller/SubjectController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/dao/SubjectDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/dao/SubjectDAO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/models/Subject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/models/Subject.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/models/SubjectReview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/models/SubjectReview.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/models/UserRoles.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/models/UserRoles.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/view/RoleDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/view/RoleDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/br/caos/plugins/route/UserRoutes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/br/caos/plugins/route/UserRoutes.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

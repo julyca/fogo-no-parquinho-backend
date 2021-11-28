@@ -12,7 +12,7 @@ class UserController {
     private val _userDAO : UserDAO = UserDAO()
 
     /** Método que realiza a criação de um Usuário (User)
-     * @param dto Entidade que contém os dados necessários para o cadastro do Usuário. Ex: nome, senha, nome de usuário, etc.
+     * @param dto [UserDto] Entidade que contém os dados necessários para o cadastro do Usuário. Ex: nome, senha, nome de usuário, etc.
      * @return Retorna Falso somente em caso de erro durante a criação da entidade.
      * */
     fun registerUser(dto : UserDto) : Boolean {
@@ -28,7 +28,7 @@ class UserController {
     }
 
     /** Método que valida as credências informadas
-     * @param dto Entidade que contém as credências necessárias para validar o login: Username e Senha
+     * @param dto [LoginDto] Entidade que contém as credenciais necessárias para validar o login: Username e Senha
      * @return Retorna Verdadeiro APENAS se o login for válido
      * */
     fun login(dto: LoginDto) : Boolean{
@@ -39,9 +39,9 @@ class UserController {
         return result
     }
 
-    /** Método que verifica a partir de seu Username a existência de um usuário
-     * @param username Nome do Usuário
-     * @return Retorna Verdadeiro SOMONTE SE o usuário existir
+    /** Método que verifica a partir do seu username a existência de um usuário
+     * @param username [String] Nome de usuário usado para a sua identificação
+     * @return Retorna Verdadeiro SOMENTE SE o usuário existir
      * */
     fun userExists(username:String):Boolean{
         var result = false
@@ -55,8 +55,9 @@ class UserController {
         return result
     }
 
-    /**busca usuario pelo apelido
-     * @return os deetalhes do usuario
+    /** Método que resgata os dados de um usuário por meio do seu apelido
+     * @param username [String] Nome de usuário usado para a sua identificação
+     * @return detalhes do usuário como objeto [User]
      */
     fun getUserByName(username:String):User?{
         try {
@@ -67,8 +68,8 @@ class UserController {
         return null
     }
 
-    /**Lista todos os usuarios
-     * @return lista todos os usuarios
+    /** Método que lista todos os usuários cadastrados.
+     * @return lista todos os usuários
      */
     fun listAllUsers():List<UserDto>{
         val list = _userDAO.getAll() as List<User>
@@ -79,8 +80,8 @@ class UserController {
         return result
     }
 
-    /**Lista todos as função
-     * @return lista todos os função
+    /** Método que lista todas as funções de um usuário
+     * @return lista com todas as funções que um usuário pode assumir como um objeto de [RoleDto]
      */
     fun listAllRoles():List<RoleDto>{
         val list = _userDAO.getRoles() as List<UserRoles>
@@ -91,15 +92,19 @@ class UserController {
         return result
     }
 
-    /**
-     * puxa os detalhes de usuario
+    /** Método que resgata os dados de um usuário por meio do seu código.
+     * @param code [String] Código do usuário usado para a sua identificação
+     * @return detalhes do usuário como objeto [UserDto]
      */
     fun getUserInfo(code : String) : UserDto?{
         return _userDAO.getByCode(code)?.toDto()
     }
 
-    /**Relaciona professores com materias
-     * @return a associaçao professores com materias
+    /** Método que relaciona um usuário a uma matéria.
+     * Se o usuário for um ALUNO tem-se que: Aluno cursa a máteria, se o usuário for um PROFESSOR tem-se que: Professor ministra a matéria.
+     * @param subjectId [Int] Identificador da disciplina que será relacionada.
+     * @param userId [Int] Identificador do usuário que será relacionado.
+     * @return Falso somente em caso de erro durante a criação do relacionamento.
      */
     fun relateSubject(subjectId:Int, userId:Int):Boolean {
         return _userDAO.relateSubject(subjectId,userId)

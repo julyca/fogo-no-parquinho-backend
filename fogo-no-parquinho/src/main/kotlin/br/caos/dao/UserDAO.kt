@@ -2,6 +2,7 @@ package br.caos.dao
 
 import br.caos.models.User
 import br.caos.models.UserRoles
+import br.caos.view.RoleDto
 
 class UserDAO : GenericDAO {
     override fun insert(element: Any): Boolean {
@@ -41,7 +42,7 @@ class UserDAO : GenericDAO {
                 user = User(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password"),
+                    "",
                     resultSet.getString("code"),
                     resultSet.getString("fullName"),
                     resultSet.getInt("roleId"),
@@ -64,7 +65,7 @@ class UserDAO : GenericDAO {
                 users.add(User(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password"),
+                    "",
                     resultSet.getString("code"),
                     resultSet.getString("fullName"),
                     resultSet.getInt("roleId"),
@@ -125,7 +126,7 @@ class UserDAO : GenericDAO {
         }
     }
 
-    /** Método que procura por uma entidade Usuário dado seu Username
+    /** Método que procura por uma entidade [User] dado seu Username
      * @param username Nome do Usuário que será procurado
      * @return Usuário encontrado
      * */
@@ -139,7 +140,7 @@ class UserDAO : GenericDAO {
                 user = User(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password"),
+                    "",
                     resultSet.getString("code"),
                     resultSet.getString("fullName"),
                     resultSet.getInt("roleId"),
@@ -152,7 +153,7 @@ class UserDAO : GenericDAO {
         }
     }
 
-    /** Método que procura por uma entidade Usuário dado seu Código (Code)
+    /** Método que procura por uma entidade [User] dado seu Código (Code)
      * @param code Código do Usuário que será procurado
      * @return Usuário encontrado
      * */
@@ -166,7 +167,7 @@ class UserDAO : GenericDAO {
                 user = User(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password"),
+                    "",
                     resultSet.getString("code"),
                     resultSet.getString("fullName"),
                     resultSet.getInt("roleId"),
@@ -179,6 +180,9 @@ class UserDAO : GenericDAO {
         }
     }
 
+    /** Método que lista todas as funções cadastradas de um usuário
+     * @return lista com todas as funções que um usuário pode assumir como um objeto de [UserRoles]
+     */
     fun getRoles(): List<UserRoles>{
         val roles = mutableListOf<UserRoles>()
         var connection : ConnectionDAO? = null
@@ -197,8 +201,14 @@ class UserDAO : GenericDAO {
         }
     }
 
+    /** Método que relaciona um usuário a uma matéria.
+     * Se o usuário for um ALUNO tem-se que: Aluno cursa a máteria, se o usuário for um PROFESSOR tem-se que: Professor ministra a matéria.
+     * @param subId [Int] Identificador da disciplina que será relacionada.
+     * @param userId [Int] Identificador do usuário que será relacionado.
+     * @return Falso somente em caso de erro durante a criação do relacionamento.
+     */
     fun relateSubject(subId : Int, userId: Int) : Boolean {
-        var result: Boolean = true
+        var result = true
         var connection : ConnectionDAO? = null
         try {
             connection = ConnectionDAO()

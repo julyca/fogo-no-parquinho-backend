@@ -13,6 +13,9 @@ API feita em Kotlin que implementa as funções básicas definidas para o produt
 
 OBS: Vale ressaltar que em caso de erro ao rodar o script como um todo deve ser executado comando por comando.
 
+Para uma melhor visualização da estrutura do banco de dados, foi criado um DER (Diagrama de Entidade e Relacionamento) para ilustrar as tabelas do banco de dados.
+![DER Fogo no Parquinho](./data/DER_fogo_no_parquinho.jfif)
+
 ### Consumindo a API
 
 ### POST /register
@@ -129,6 +132,76 @@ Exemplo de JSON Body:
 ```
 {
     "subjectId" : "0"
+}
+```
+
+### GET /subjects
+Listagem de todas as disciplinas cadastradas. (Não Paginada)
+
+Exemplo de retorno:
+```
+[
+    {
+        "id" : "0",
+        "code" : "ECM251",
+        "name" : "Linguagens de Programação I",
+        "description" : "Magia de Camponês"
+        "creationTime" : "2021-11-11"
+    }
+]
+```
+
+### GET /subjects/{subjectCode}
+Retorna os dados de uma matéria especifica, com base no código informado.
+
+Exemplo de retorno:
+```
+{
+    "id" : "0",
+    "code" : "ECM251",
+    "name" : "Linguagens de Programação I",
+    "description" : "Magia de Camponês"
+    "creationTime" : "2021-11-11"
+}
+```
+
+### GET /subjects/{subjectCode}/review
+Listagem de todas as avaliações feitas sobre uma matéria especifica, com base no código informado. (Não Paginada)
+
+Exemplo de retorno:
+```
+[
+    {
+        "reviewId" : "0",
+        "score" : "0",
+        "feedback" : "odeio muito tudo isso"
+        "reviewerName" : "agenteP",
+        "reviewerRole" : "0",
+        "creationTime" : "2021-11-11"
+    }
+]
+```
+
+### POST /subjects
+Cadastro de nova disciplina na aplicação. **REQUER AUTENTICAÇÃO**
+
+Exemplo de JSON Body:
+```
+{
+    "code" : "ECM251",
+    "name" : "Linguagens de Programação I",
+    "description" : "Magia de Camponês"
+}
+```
+
+### POST /subjects/{subjectCode}/review
+Registro de nova avaliação feita sobre a disciplina identificada (pelo código informado). **REQUER AUTENTICAÇÃO**
+
+Exemplo de JSON Body:
+```
+{
+    "score" : "0",
+    "feedback" : "odeio muito tudo isso"
 }
 ```
 

@@ -6,7 +6,7 @@ Para ver mais sobre o frontend do projeto acesse o GitHub: [CPA Evolution](https
 ## Sobre o projeto
 "Fogo no Parquinho" consiste no projeto de avaliações entre alunos e professores com o fim de avaliar o desempenho do profissional, do estudante e das disciplinas do curso oferecido.
 Como proposta inicial, todos os usuários podem comentar um sobre os outros: 
-- Um aluno pode avaliar um professor, fora e dentro do escopo da disciplina ministrada; 
+- Um aluno pode avaliar um professor, fora e dentro do escopo da disciplina ministrada (especificando o professor, no texto, durante a avaliação da Disciplina); 
 - Um professor pode avaliar o desempenho de um aluno ou de outros professores, se assim achar pertinente;
 - E um aluno pode comentar sobre o desempenho de outros alunos, por exemplo o quão bom é fazer trabalho com o outro.
 

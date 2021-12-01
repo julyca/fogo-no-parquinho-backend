@@ -1,7 +1,11 @@
 # fogo-no-parquinho-backend
-Este é o GitHub do backend da aplicação: Fogo no Parquinho
+Este é o GitHub do backend da aplicação "Fogo no Parquinho" desenvolvido por:
+- Julia Fernandes Santana
+- Pedro Henrique Soares Pinheiro
 
-Para ver mais sobre o frontend do projeto acesse o GitHub: [CPA Evolution](https://github.com/ViniGd/cpa_evolution)
+Para ver mais sobre o frontend do projeto acesse o GitHub [CPA Evolution](https://github.com/ViniGd/cpa_evolution) desenvolvido por:
+- Pedro Henrique Ferreira Dominichelli Fabris
+- Vinicius Abe de Godoy
 
 ## Sobre o projeto
 "Fogo no Parquinho" consiste no projeto de avaliações entre alunos e professores com o fim de avaliar o desempenho do profissional, do estudante e das disciplinas do curso oferecido.
